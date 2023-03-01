@@ -37,11 +37,14 @@ function clickOnPhoto(e) {
     
     const createModal = basicLightbox.create(`
         <img src="${e.target.dataset.source}" width="800" height="600">
-    `)
-
-    createModal.show();
+    `, {
+        onClose: (createModal) => {
+            window.removeEventListener('keydown', createModalOnEscKeyPressModal);
+        }
+    })
     const createModalOnEscKeyPressModal = onEscKeyPress.bind(createModal);
     window.addEventListener('keydown', createModalOnEscKeyPressModal);
+    createModal.show();
 }
 
 function onEscKeyPress(e) {
@@ -49,6 +52,6 @@ function onEscKeyPress(e) {
     const isEscKey = e.code === ESC_KEY_CODE;
     if (isEscKey) {
         this.close();
-      window.removeEventListener('keydown', onEscKeyPress);
-  }
-}
+    } 
+};
+
